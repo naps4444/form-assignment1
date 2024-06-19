@@ -184,7 +184,7 @@ const passTogle2 = show2 ? 'text' : 'password';
                     })}
                     id="password"
                     type={`${passTogle}`}
-                    placeholder=""
+                    placeholder="********"
                     className={`block w-full m-auto px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm ${
                       errors.password ? "border-red-500" : "border-black"
                     } font-semibold mt-3 outline-0 `}
@@ -217,7 +217,7 @@ const passTogle2 = show2 ? 'text' : 'password';
                     })}
                     id="confirmPassword"
                     type={`${passTogle2}`}
-                    placeholder=""
+                    placeholder="********"
                     className="block w-full m-auto px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
                   />
 
