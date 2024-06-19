@@ -10,12 +10,12 @@ import Loader from './Components/Loader';
 
 function App() {
 
-  let password;
+
 
   const {register, handleSubmit, formState:{errors}, reset, watch, getValues } = useForm({
     mode: "onTouched"
   });
-  password = watch("password", "");
+  const password = watch("password", "");
 
   const [loading, setLoading] = useState(false);
   const [regError, setRegError] = useState("");
@@ -145,9 +145,13 @@ const passTogle2 = show2 ? 'text' : 'password';
             
 
           </div>
-            <input {...register("email", 
-                 {required: " Email is required"
-                 })} type="text" placeholder="Email" className={` ${errors.email ? "border-red-500" : ""} block w-full px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm`}/>
+            <input {...register("email",
+                 {required: "Email Address is required",
+                  pattern: { 
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    messsage: " Please enter a valid email address "
+                  }
+                 })}  type="email" placeholder="Email" className={` ${errors.email ? "border-red-500" : ""} block w-full px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm`}/>
           </div>
 
 
@@ -168,8 +172,23 @@ const passTogle2 = show2 ? 'text' : 'password';
             
 
           </div>
-            <input {...register("password", { required: "Password is required", minLength: { value: 4, message: "**Password must be more than 4 characters" }, maxLength: { value: 12, message: "**Password cannot exceed more than 12 characters" }})}
-                  type={passTogle} placeholder="******" className={` ${errors.password ? "border-red-500" : ""} block w-full px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm`} />
+          <input
+                    {...register("password", {
+                      required: "Password is required",
+                      pattern: {
+                        value:
+                          /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                        message:
+                          "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character",
+                      },
+                    })}
+                    id="password"
+                    type={`${passTogle}`}
+                    placeholder=""
+                    className={`block w-full m-auto px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm ${
+                      errors.password ? "border-red-500" : "border-black"
+                    } font-semibold mt-3 outline-0 `}
+                  />
 
                 {show ? <IoEye  onClick={toggle} className='absolute right-3 bottom-4'/> : <AiFillEyeInvisible onClick={toggle} className='absolute right-3 bottom-4'/>}
           </div>
@@ -189,8 +208,18 @@ const passTogle2 = show2 ? 'text' : 'password';
             
 
           </div>
-            <input {...register("confirmPassword", 
-                { required: "Password is required" },{validate: (value) => value === getValues("password")})} type={passTogle2} placeholder="******" className={` ${errors.confirmPassword ? "border-red-500" : ""} block w-full px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm`}/>
+          <input
+                    {...register("confirmPassword", {
+                      required: " Confirm your password",
+  
+                      validate: (value) =>
+                        value === password || "Passwords do not match",
+                    })}
+                    id="confirmPassword"
+                    type={`${passTogle2}`}
+                    placeholder=""
+                    className="block w-full m-auto px-6 py-3 text-black bg-white border border-gray-200 rounded-full appearance-none placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  />
 
            {show2 ? <IoEye  onClick={toggle2} className='absolute right-3 bottom-4'/> : <AiFillEyeInvisible onClick={toggle2} className='absolute right-3 bottom-4'/>}
           </div>
